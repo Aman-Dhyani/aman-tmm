@@ -17,5 +17,9 @@ RUN npm run build
 # 6. Expose the port your Next.js app will run on
 EXPOSE 3000
 
-# 7. Start the app in production
+# 7. Add health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
+
+# 8. Start the app in production
 CMD ["npm", "start"]
