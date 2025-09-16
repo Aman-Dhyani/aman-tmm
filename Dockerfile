@@ -1,24 +1,25 @@
-# Use the Node.js 20.13.1 base image
-FROM node:20.13.1
+# 1. Base image
+FROM node:20-alpine
 
-# Set the working directory inside the container
-WORKDIR /src
+# 2. Set working directory
+WORKDIR /app
 
-# Copy package files and install dependencies
-COPY package*.json ./
-RUN npm install
+# 3. Install dependencies
+COPY package.json package-lock.json* ./
+RUN npm ci
 
-# Copy the entire application code
+# 4. Copy source code
 COPY . .
 
-# Build the application
+# 5. Build the Next.js project
 RUN npm run build
 
-# Set environment variable for port
-ENV PORT=3030
+# 6. Expose the port your Next.js app will run on
+EXPOSE 3000
 
-# Expose the port
-EXPOSE 3030
+# 7. Add health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
 
-# Command to start the application
-CMD ["npm", "run", "start"]
+# 8. Start the app in production
+CMD ["npm", "start"]
