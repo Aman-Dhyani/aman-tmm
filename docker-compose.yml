@@ -7,17 +7,12 @@ services:
       - "3030:3030"
     environment:
       NODE_ENV: production
-      PORT: 3030
-      DB_HOST: xxxx
-      DB_USER: aman_user
-      DB_PASS: gcxxxxxxxxxM47c
-      DB_NAME: amest_db
-    # Remove volumes in production for safety
-    # volumes:
-    #   - .:/src
-    #   - /src/node_modules
+    volumes:
+      - .:/app  # Optional: for live development, remove in prod
+      - /app/node_modules
     restart: unless-stopped
 
+  # Example: Add a database if needed
   db:
     image: mysql:8.0
     environment:
