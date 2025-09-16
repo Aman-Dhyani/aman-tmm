@@ -14,7 +14,10 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose the port your app runs on
+# Set environment variable for port
+ENV PORT=3030
+
+# Expose the port
 EXPOSE 3030
 
 # Command to start the application
