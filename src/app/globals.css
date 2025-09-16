@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serife;
+}
+
+/* hide scroll */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* tally_table_scroll */
+.tally_table_scroll ::-webkit-scrollbar {
+  display: block;
+}
+
+a:focus,
+img:focus {
+  outline: none;
+}
+
+/* elements */
+/* Default card wrapper */
+.card_wprapper {
+  width: 740px;
+}
+
+/* mediaquery */
+@media (max-width: 810px) {
+  .card_wprapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  .card_wprapper>.grid {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* custom apexchart */
+.apexcharts-xaxis,
+.apexcharts-yaxis,
+.apexcharts-legend-text,
+.apexcharts-tooltip {
+  /* color: #171717 !important; */
+  font-family: monospace !important;
+  font-weight: bold !important;
+}
+
+.apexcharts-tooltip {
+  color: #171717 !important;
+}
+
+.apexcharts-legend-series{
+  gap: 4px !important;
+}
+
+.apexcharts-legend.apexcharts-align-center.apx-legend-position-bottom {
+  align-items: baseline !important;
+  justify-content: flex-start !important;
+}
+
+/* Custom shadow  */
+.sd-full-shadow {
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.03);
+}
+
+/* custpm modal */
+.cs-modal-overlay{
+  height: 100vh;
+  opacity: 0.6 !important;
+}
+
+#devtools-indicator,
+[data-next-badge-root] {
+  display: none !important;
+}
