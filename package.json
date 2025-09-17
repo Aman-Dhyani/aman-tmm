@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next dev --experimental-https"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
