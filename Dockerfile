@@ -11,15 +11,12 @@ RUN npm ci
 # 4. Copy source code
 COPY . .
 
-# 5. Build the Next.js project
+# 5. Build Next.js project
+# (env vars from docker-compose will be available here too)
 RUN npm run build
 
-# 6. Expose the port your Next.js app will run on
+# 6. Expose port
 EXPOSE 3000
 
-# 7. Add health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
-
-# 8. Start the app in production
+# 7. Start app
 CMD ["npm", "start"]
