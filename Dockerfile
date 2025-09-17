@@ -1,11 +1,24 @@
-FROM node:22.11.0-alpine
+# Use Node.js LTS as base image
+FROM node:20-alpine
 
+# Set working directory
 WORKDIR /app
 
-COPY ./app/package.json ./
+# Copy package files first (for caching)
+COPY package.json package-lock.json* ./
 
+# Install dependencies
 RUN npm install
 
-COPY ./app .
+# Copy all project files
+COPY . .
 
-CMD ["npm", "dev"]
+# Build Next.js project
+RUN npm run build
+
+# Expose the port (from env)
+ENV PORT=3000
+EXPOSE 3000
+
+# Start Next.js app
+CMD ["npm", "start"]
