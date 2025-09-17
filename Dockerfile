@@ -17,12 +17,12 @@ COPY . .
 RUN npm run build
 
 # Expose the port (from env)
-ENV PORT=3000
-EXPOSE 3000
+ENV PORT=3030
+EXPOSE 3030
 
 # Start Next.js app
 CMD ["npm", "start"]
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget --spider --quiet http://localhost:3000/_next/  || exit 1
+  CMD wget --spider --quiet http://localhost:3030/_next/  || exit 1
