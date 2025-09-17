@@ -1,28 +1,38 @@
-# 1. Base image
-FROM node:20-alpine
+# syntax=docker/dockerfile:1
 
-# 2. Set working directory
-WORKDIR /app
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Dockerfile reference guide at
+# https://docs.docker.com/go/dockerfile-reference/
 
-# 3. Install wget (needed for healthcheck)
-RUN apk add --no-cache wget
+# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-# 4. Install dependencies
-COPY package.json package-lock.json* ./
-RUN npm ci
+ARG NODE_VERSION=20.14.0
 
-# 5. Copy source code
+FROM node:${NODE_VERSION}-alpine
+
+# Use production node environment by default.
+ENV NODE_ENV production
+
+
+WORKDIR /usr/src/app
+
+# Download dependencies as a separate step to take advantage of Docker's caching.
+# Leverage a cache mount to /root/.npm to speed up subsequent builds.
+# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
+# into this layer.
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --omit=dev
+
+# Run the application as a non-root user.
+USER node
+
+# Copy the rest of the source files into the image.
 COPY . .
 
-# 6. Build Next.js project
-RUN npm run build
-
-# 7. Expose port
+# Expose the port that the application listens on.
 EXPOSE 3000
 
-# 8. Add health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
-
-# 9. Start app
-CMD ["npm", "start"]
+# Run the application.
+CMD npm run start
