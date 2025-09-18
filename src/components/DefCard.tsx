@@ -47,7 +47,8 @@ export default function DefCard({ heading, subheading, buttonText, buttonRedirec
                 onClick={() => handleRedirect(buttonRedirect)}
                 className={`self-start py-[4px] px-[12px] min-w-[120px] font-medium rounded-[16px] shadow-md cursor-pointer border border-transparent ${
                   buttonColor || "bg-[#44b5562e] text-black"
-                }`}>
+                } transform transition-transform active:scale-95 active:shadow-sm`}
+              >
                 {buttonText}
               </button>
             )}
