@@ -38,7 +38,7 @@ export default function Notify() {
   return (
     <div
       className={`
-        fixed top-4 left-1/2 transform -translate-x-1/2 z-50
+        fixed top-18 left-1/2 transform -translate-x-1/2 z-50
         transition-all duration-300 ease-in-out
         ${visible ? "translate-y-0 opacity-100" : "-translate-y-20 opacity-0"}
       `}

@@ -28,10 +28,10 @@ export default function Transactions() {
       setAmount("");
     } catch (error) {
       console.error(error);
-      notify("Failed to save transaction", "error");
+      notify("Transaction failed", "error");
     } finally {
       setIsSubmitting(false);
-      notify("saved", "success");
+      notify("Succeed", "success");
     }
   }
 
